@@ -7,20 +7,13 @@ import (
 	"github.com/gorilla/mux"
 	"encoding/json"
 	"io/ioutil"
+	"go-todo-api/models"
 )
-
-// Todo is the basic type to hold a todo item
-type todo struct {
-	ID string `json:"ID"`
-    ParentID string `json:"ParentID"`
-	Desc string `json:"Desc"`
-	Complete bool `json:"Complete"`
-}
-
-var todos []todo
+ 
+var todos []models.Todo
 
 func addTodo(w http.ResponseWriter, r *http.Request) {
-	var newTodo todo
+	var newTodo models.Todo
 	reqBody, err := ioutil.ReadAll(r.Body)
 	if err != nil {
 		fmt.Fprintf(w, "Uh Oh... something went wrong there")
