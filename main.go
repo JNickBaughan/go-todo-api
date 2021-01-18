@@ -9,13 +9,18 @@ import (
 	"io/ioutil"
 )
 
-
-var todos = []string{
-	"Fix the sump pump discharge pipes",
+// Todo is the basic type to hold a todo item
+type todo struct {
+	ID string `json:"ID"`
+    ParentID string `json:"ParentID"`
+	Desc string `json:"Desc"`
+	Complete bool `json:"Complete"`
 }
 
+var todos []todo
+
 func addTodo(w http.ResponseWriter, r *http.Request) {
-	var newTodo string
+	var newTodo todo
 	reqBody, err := ioutil.ReadAll(r.Body)
 	if err != nil {
 		fmt.Fprintf(w, "Uh Oh... something went wrong there")
@@ -42,5 +47,5 @@ func main() {
 	router.HandleFunc("/", listTodos)
 
 	router.HandleFunc("/add", addTodo)
-	log.Fatal(http.ListenAndServe(":8080", router))
+	log.Fatal(http.ListenAndServe(":3000", router))
 }
